@@ -2,7 +2,6 @@ import json
 
 #print(Hook['params'])
 #print(Hook['req'])
-Hook = {'params':{"rq":"cat"}}
 
 database = {"products":[{"product-name":"MacBook",
                     "category":"Mac",
