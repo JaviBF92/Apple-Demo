@@ -2,7 +2,7 @@ import json
 
 #print(Hook['params'])
 #print(Hook['req'])
-
+Hook = {'params':""}
 
 database = {"products":[{"product-name":"MacBook",
                     "category":"Mac",
@@ -71,31 +71,34 @@ request = Hook['params']
 status = 'ok'
 
 if 'rq' in request:
-	rq = request['rq']
-	if rq in [i["name"] for i in database['categories']]:
-		body = find_products(rq,"category")
+    rq = request['rq']
+    if rq in [i["name"] for i in database['categories']]:
+        body = find_products(rq,"category")
 
-	elif rq == 'search':
-		if 'search' in request:
-			body = find_products(request['search'],"product-name")
-			if not body:
-				body = "empty"
+    elif rq == 'search':
+        if 'search' in request:
+            body = find_products(request['search'],"product-name")
+            if not body:
+                body = "empty"
 
-		else:
-			status = 'error'
-			body = 'wrong parameters in request'
+        else:
+            status = 'error'
+            body = 'wrong parameters in request'
 
-	elif rq == 'info':
-		if 'prod' in request:
-			body = find_products(request['prod'], "product_name", True)
+    elif rq == 'info':
+        if 'prod' in request:
+            body = find_products(request['prod'], "product_name", True)
+        else:
+            status = 'error'
+            body = 'wrong parameters in request'
     elif rq == 'cat':
-		body = database['categories']
-	else:
-		status = "error"
-		body = "request not found"
+        body = database['categories']
+    else:
+        status = 'error'
+        body = 'request not found'
 else:
-	status = "error"
-	body = "wrong parameters in request"
+	status = 'error'
+	body = 'wrong parameters in request'
 
 
 res = json.dumps({"status":status, "body":body})
