@@ -2,7 +2,7 @@ import json
 
 #print(Hook['params'])
 #print(Hook['req'])
-Hook = {'params':""}
+Hook = {'params':{"rq":"cat"}}
 
 database = {"products":[{"product-name":"MacBook",
                     "category":"Mac",
@@ -97,8 +97,8 @@ if 'rq' in request:
         status = 'error'
         body = 'request not found'
 else:
-	status = 'error'
-	body = 'wrong parameters in request'
+    status = 'error'
+    body = 'wrong parameters in request'
 
 
 res = json.dumps({"status":status, "body":body})
