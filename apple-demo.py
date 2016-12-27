@@ -2,6 +2,7 @@ import json
 
 #print(Hook['params'])
 #print(Hook['req'])
+Hook={"params":{"rq":"mac"}}
 
 
 database = {"products":[{"name":"MacBook",
@@ -64,7 +65,7 @@ def find_products(item, find_by, more_info=False):
 	products = [i for i in database["products"] if str(item) in i[find_by].lower()]
 	if not more_info:
 		products = [{key:i[key] for key in ["name","image","link","prices"]} for i in products]
-	return products
+	return products[:3]
 
 request = Hook['params']
 
