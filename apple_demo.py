@@ -101,11 +101,11 @@ status = 'ok'
 if 'rq' in request:
     rq = request['rq']
     if rq in [i["name"].lower() for i in database['categories']]:
-        body = find_products(rq,"category")
+        body = generate_product_template(find_products(rq,"category"))
 
     elif rq == 'search':
         if 'search' in request:
-            body = find_products(request['search'],"title")
+            body = generate_product_template(find_products(request['search'],"title"))
             if not body:
                 body = 'empty'
 
