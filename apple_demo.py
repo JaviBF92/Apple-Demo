@@ -61,12 +61,38 @@ database = {"products":[{"title":"MacBook",
 }
 
 
-def find_products(item, find_by, more_info=False):
+def find_products(item, find_by):
 	products = [i for i in database["products"] if str(item) in i[find_by].lower()]
-	if not more_info:
-		products = [{key:i[key] for key in ["title","image_url","link","prices"]} for i in products]
+	products = [{key:i[key] for key in ["title","image_url","link","prices"]} for i in products]
 	return products[:3]
 
+def generate_product_template(products):
+
+    elem = products
+
+    for i in elem:
+        i['buttons']= [
+            {
+            "type": "postback",
+            "title": "More info",
+            "payload": "info_"+i['title']
+            },
+            {
+                "type": "web_url",
+                "url": i['link'],
+                "title": "Buy"
+            }
+        ]
+        del i['link']
+
+    template = {
+        "type": "template",
+        "payload": {
+            "template_type": "generic",
+            "elements": elem
+        }
+    }
+    return template
 
 request = Hook['params']
 
@@ -89,7 +115,8 @@ if 'rq' in request:
 
     elif rq == 'info':
         if 'prod' in request:
-            body = find_products(request['prod'], "title", True)
+            #body = find_products(request['prod'], "title", True)
+            pass
         else:
             status = 'error'
             body = 'wrong parameters in request'
