@@ -77,7 +77,7 @@ def generate_product_template(products):
             {
             "type": "postback",
             "title": "More info",
-            "payload": "info_"+i['title']
+            "payload": "info_"+i['title'].replace(" ","_")
             },
             {
                 "type": "web_url",
@@ -98,6 +98,17 @@ def generate_product_template(products):
     }
     return template
 
+def get_additional_info(product):
+
+    info = [i for i in database["products"] if str(product) == i['title']]
+
+    if info:
+        info = info[0]
+
+    else:
+        info = None
+
+    return info
 
 
 request = Hook['params']
@@ -119,13 +130,13 @@ if 'rq' in request:
             status = 'error'
             body = 'wrong parameters in request'
 
-    elif rq == 'info':
-        if 'prod' in request:
-            #body = find_products(request['prod'], "title", True)
-            pass
-        else:
+    elif 'info' in rq:
+        product = rq.split("_",1)[1].replace("_"," ")
+        body = get_additional_info(product)
+
+        if not body:
             status = 'error'
-            body = 'wrong parameters in request'
+            body = 'the object does not exist in the database'
     elif rq == 'cat':
         body = database['categories']
     else:
