@@ -197,10 +197,11 @@ if 'rq' in request:
 
     elif rq == 'search':
         if 'search' in request:
-            body = generate_product_template(find_products(request['search'],"title"))
-            if not body:
+            pr = find_products(request['search'],"title")
+            if pr:
+                body = generate_product_template(pr)
+            else:
                 body = 'empty'
-
         else:
             status = 'error'
             body = 'wrong parameters in request'
