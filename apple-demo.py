@@ -2,12 +2,12 @@ import json
 
 #print(Hook['params'])
 #print(Hook['req'])
-Hook={"params":{"rq":"mac"}}
+#Hook={"params":{"rq":"mac"}}
 
 
-database = {"products":[{"name":"MacBook",
+database = {"products":[{"title":"MacBook",
                     "category":"Mac",
-                    "image":"http://store.storeimages.cdn-apple.com/4662/as-images.apple.com/is/image/AppleInc/aos/published/images/m/ac/macbook/select/macbook-select-spacegray-201604?wid=1200&hei=630&fmt=jpeg&qlt=95&op_sharpen=0&resMode=bicub&op_usm=0.5,0.5,0,0&iccEmbed=0&layer=comp&.v=1473974029537",
+                    "image_url":"http://store.storeimages.cdn-apple.com/4662/as-images.apple.com/is/image/AppleInc/aos/published/images/m/ac/macbook/select/macbook-select-spacegray-201604?wid=1200&hei=630&fmt=jpeg&qlt=95&op_sharpen=0&resMode=bicub&op_usm=0.5,0.5,0,0&iccEmbed=0&layer=comp&.v=1473974029537",
                     "link":"http://www.apple.com/es/macbook/",
                     "prices":1499,
                     "screen-size":12,
@@ -19,9 +19,9 @@ database = {"products":[{"name":"MacBook",
                     "size":"1.31 x 28.05 x 19.65",
                     "weight":0.92
 					},
-                   {"name":"MacBook Air",
+                   {"title":"MacBook Air",
                     "category":"Mac",
-                    "image":"",
+                    "image_url":"",
                     "link":"http://www.apple.com/es/macbook-air/",
                     "prices":1099,
                     "screen-size":13.3,
@@ -33,9 +33,9 @@ database = {"products":[{"name":"MacBook",
                     "size":"1.7 x 32.5 x 22.7",
                     "weight":1.35
 					},
-                   {"name":"iMac",
+                   {"title":"iMac",
                     "category":"Mac",
-                    "image":"",
+                    "image_url":"",
                     "link":"http://www.apple.com/es/imac/",
                     "prices":1279,
                     "screen-size":21.5,
@@ -64,8 +64,9 @@ database = {"products":[{"name":"MacBook",
 def find_products(item, find_by, more_info=False):
 	products = [i for i in database["products"] if str(item) in i[find_by].lower()]
 	if not more_info:
-		products = [{key:i[key] for key in ["name","image","link","prices"]} for i in products]
+		products = [{key:i[key] for key in ["title","image_url","link","prices"]} for i in products]
 	return products[:3]
+
 
 request = Hook['params']
 
@@ -78,9 +79,9 @@ if 'rq' in request:
 
     elif rq == 'search':
         if 'search' in request:
-            body = find_products(request['search'],"name")
+            body = find_products(request['search'],"title")
             if not body:
-                body = "empty"
+                body = 'empty'
 
         else:
             status = 'error'
@@ -88,7 +89,7 @@ if 'rq' in request:
 
     elif rq == 'info':
         if 'prod' in request:
-            body = find_products(request['prod'], "name", True)
+            body = find_products(request['prod'], "title", True)
         else:
             status = 'error'
             body = 'wrong parameters in request'
