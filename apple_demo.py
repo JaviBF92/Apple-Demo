@@ -9,7 +9,7 @@ database = {"products":[{"title":"MacBook",
                     "category":"Mac",
                     "image_url":"http://store.storeimages.cdn-apple.com/4662/as-images.apple.com/is/image/AppleInc/aos/published/images/m/ac/macbook/select/macbook-select-spacegray-201604?wid=1200&hei=630&fmt=jpeg&qlt=95&op_sharpen=0&resMode=bicub&op_usm=0.5,0.5,0,0&iccEmbed=0&layer=comp&.v=1473974029537",
                     "link":"http://www.apple.com/es/macbook/",
-                    "prices":1499,
+                    "price":1499,
                     "screen-size":12,
                     "processor":{"processor-name":"Intel Core m3",
                                 "cores":2,
@@ -23,7 +23,7 @@ database = {"products":[{"title":"MacBook",
                     "category":"Mac",
                     "image_url":"",
                     "link":"http://www.apple.com/es/macbook-air/",
-                    "prices":1099,
+                    "price":1099,
                     "screen-size":13.3,
 					"processor":{"processor-name":"Intel Core i5",
                                 "cores":2,
@@ -37,7 +37,7 @@ database = {"products":[{"title":"MacBook",
                     "category":"Mac",
                     "image_url":"",
                     "link":"http://www.apple.com/es/imac/",
-                    "prices":1279,
+                    "price":1279,
                     "screen-size":21.5,
 					"processor":{"processor-name":"Intel Core i5",
                                 "cores":2,
@@ -63,7 +63,7 @@ database = {"products":[{"title":"MacBook",
 
 def find_products(item, find_by):
 	products = [i for i in database["products"] if str(item) in i[find_by].lower()]
-	products = [{key:i[key] for key in ["title","image_url","link","prices"]} for i in products]
+	products = [{key:i[key] for key in ["title","image_url","link","price"]} for i in products]
 	return products[:3]
 
 def generate_product_template(products):
@@ -83,7 +83,9 @@ def generate_product_template(products):
                 "title": "Buy"
             }
         ]
+        i['subtitle'] = i['price']
         del i['link']
+        del i['price']
 
     template = {
         "type": "template",
