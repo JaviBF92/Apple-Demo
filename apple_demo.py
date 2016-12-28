@@ -1,9 +1,8 @@
 import json
 
-#print(Hook['params'])
-#print(Hook['req'])
-#Hook={"params":{"rq":"mac"}}
 
+#print(Hook['req'])
+#Hook={"params":{"rq":"search","search":"im"}}
 
 database = {"products":[{"title":"MacBook",
                     "category":"Mac",
@@ -21,7 +20,7 @@ database = {"products":[{"title":"MacBook",
 					},
                    {"title":"MacBook Air",
                     "category":"Mac",
-                    "image_url":"",
+                    "image_url":"http://store.storeimages.cdn-apple.com/4662/as-images.apple.com/is/image/AppleInc/aos/published/images/m/ac/macbook/air/macbook-air-gallery5-2014?wid=1292&hei=766&fmt=jpeg&qlt=95&op_sharpen=0&resMode=bicub&op_usm=0.5,0.5,0,0&iccEmbed=0&layer=comp&.v=1476297407895",
                     "link":"http://www.apple.com/es/macbook-air/",
                     "price":"1099 €",
                     "screen-size":13.3,
@@ -35,7 +34,7 @@ database = {"products":[{"title":"MacBook",
 					},
                    {"title":"iMac",
                     "category":"Mac",
-                    "image_url":"",
+                    "image_url":"http://store.storeimages.cdn-apple.com/4662/as-images.apple.com/is/image/AppleInc/aos/published/images/I/MA/IMAC/IMAC?wid=1200&hei=630&fmt=jpeg&qlt=95&op_sharpen=0&resMode=bicub&op_usm=0.5,0.5,0,0&iccEmbed=0&layer=comp&.v=dSMkx2",
                     "link":"http://www.apple.com/es/imac/",
                     "price":"1279 €",
                     "screen-size":21.5,
@@ -62,9 +61,12 @@ database = {"products":[{"title":"MacBook",
 
 
 def find_products(item, find_by):
-	products = [i for i in database["products"] if str(item) in i[find_by].lower()]
-	products = [{key:i[key] for key in ["title","image_url","link","price"]} for i in products]
-	return products[:3]
+
+    products = [i for i in database["products"] if str(item) in i[find_by].lower()]
+    products = [{key:i[key] for key in ["title","image_url","link","price"]} for i in products]
+
+    return products[:3]
+
 
 def generate_product_template(products):
 
@@ -95,6 +97,8 @@ def generate_product_template(products):
         }
     }
     return template
+
+
 
 request = Hook['params']
 
